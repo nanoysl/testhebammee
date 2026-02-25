@@ -1,2075 +1,324 @@
-<!doctype html>
-<html lang="de">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#0b0b12" />
-  <meta name="description" content="Rieke Löbker – Deine achtsame Hebamme in Rheine und Umgebung. Schwangerschaft, Wochenbett, Kurse (Geburtsvorbereitung, Rückbildung, Babymassage). Kontakt & Anfrage." />
-  <title>Hebamme Rieke Löbker – Deine achtsame Hebamme in Rheine & Umgebung</title>
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="Hebamme Rieke Löbker – Deine achtsame Hebamme" />
-  <meta property="og:description" content="Warm. Klar. Fachkundig. Betreuung in Schwangerschaft & Wochenbett – plus Kurse in Rheine." />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://hebamme-rieke.de/wp-content/uploads/2018/05/Rieke_Petersen_Hebamme_1920x1080_wochenbett.jpg" />
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet" />
-
-  <!-- GSAP + ScrollTrigger + Lenis -->
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
-
-  <style>
-    :root{
-      --bg:#070711;
-      --bg2:#0b0b12;
-      --card: rgba(255,255,255,.06);
-      --card2: rgba(255,255,255,.08);
-      --stroke: rgba(255,255,255,.12);
-      --stroke2: rgba(255,255,255,.18);
-      --text: rgba(255,255,255,.90);
-      --muted: rgba(255,255,255,.68);
-      --muted2: rgba(255,255,255,.54);
-      --shadow: 0 24px 80px rgba(0,0,0,.55);
-      --glow: 0 0 0 1px rgba(255,255,255,.08), 0 24px 80px rgba(0,0,0,.55);
-
-      --brand1:#7c3aed; /* violett */
-      --brand2:#a78bfa; /* hellviolett */
-      --brand3:#f472b6; /* rosé */
-      --brand4:#60a5fa; /* blau */
-      --ok:#34d399;
-
-      --r: 22px;
-      --r2: 30px;
-
-      --max: 1180px;
-      --pad: clamp(16px, 4vw, 42px);
-      --h1: clamp(40px, 5.6vw, 74px);
-      --h2: clamp(26px, 3.2vw, 40px);
-      --h3: clamp(18px, 2vw, 22px);
-      --p: clamp(15px, 1.25vw, 18px);
-      --small: 13px;
-
-      --ease: cubic-bezier(.2,.8,.2,1);
-    }
-
-    *{ box-sizing:border-box; }
-    html, body { height:100%; }
-    body{
-      margin:0;
-      font-family: Manrope, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: radial-gradient(1200px 600px at 20% -10%, rgba(124,58,237,.35), transparent 55%),
-                  radial-gradient(900px 500px at 90% 10%, rgba(244,114,182,.22), transparent 55%),
-                  radial-gradient(900px 600px at 55% 120%, rgba(96,165,250,.18), transparent 55%),
-                  linear-gradient(180deg, var(--bg), var(--bg2));
-      color: var(--text);
-      overflow-x:hidden;
-    }
-
-    /* Subtle noise overlay */
-    .noise{
-      position:fixed; inset:0; pointer-events:none; z-index:2;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
-      mix-blend-mode: overlay;
-      opacity:.35;
-      transform: translateZ(0);
-    }
-
-    /* Animated aurora blobs */
-    .aurora{
-      position:fixed; inset:-20% -10% -30% -10%;
-      z-index:0; pointer-events:none;
-      filter: blur(30px);
-      opacity:.85;
-    }
-    .blob{
-      position:absolute; width:48vmax; height:48vmax; border-radius:50%;
-      background: radial-gradient(circle at 30% 30%, rgba(124,58,237,.75), transparent 55%),
-                  radial-gradient(circle at 70% 70%, rgba(244,114,182,.50), transparent 55%),
-                  radial-gradient(circle at 50% 20%, rgba(96,165,250,.45), transparent 55%);
-      mix-blend-mode: screen;
-      will-change: transform;
-      transform: translate3d(0,0,0);
-      opacity:.55;
-    }
-    .blob.b2{
-      width:42vmax; height:42vmax;
-      background: radial-gradient(circle at 30% 40%, rgba(167,139,250,.70), transparent 55%),
-                  radial-gradient(circle at 70% 60%, rgba(96,165,250,.38), transparent 55%),
-                  radial-gradient(circle at 40% 70%, rgba(244,114,182,.25), transparent 55%);
-      opacity:.45;
-    }
-    .blob.b3{
-      width:36vmax; height:36vmax;
-      background: radial-gradient(circle at 50% 50%, rgba(124,58,237,.38), transparent 55%),
-                  radial-gradient(circle at 35% 70%, rgba(244,114,182,.42), transparent 55%),
-                  radial-gradient(circle at 70% 35%, rgba(96,165,250,.28), transparent 55%);
-      opacity:.35;
-    }
-
-    /* Custom cursor (desktop) */
-    .cursor, .cursorDot{
-      position:fixed; top:0; left:0;
-      width:44px; height:44px; border-radius:50%;
-      pointer-events:none; z-index:50;
-      transform: translate(-50%,-50%);
-      mix-blend-mode: difference;
-      opacity:0;
-    }
-    .cursor{
-      border:1px solid rgba(255,255,255,.75);
-      backdrop-filter: blur(4px);
-    }
-    .cursorDot{
-      width:8px; height:8px;
-      background: rgba(255,255,255,.95);
-    }
-    @media (hover:none){
-      .cursor, .cursorDot{ display:none; }
-    }
-
-    /* Layout */
-    .wrap{ position:relative; z-index:1; }
-    .container{ width:min(var(--max), calc(100% - (var(--pad) * 2))); margin:0 auto; }
-    .grid{
-      display:grid;
-      gap: clamp(14px, 2vw, 22px);
-    }
-    .two{ grid-template-columns: 1.2fr .8fr; align-items:stretch; }
-    .three{ grid-template-columns: repeat(3, 1fr); }
-    .four{ grid-template-columns: repeat(4, 1fr); }
-    @media (max-width: 980px){
-      .two{ grid-template-columns: 1fr; }
-      .three{ grid-template-columns: 1fr; }
-      .four{ grid-template-columns: 1fr 1fr; }
-    }
-    @media (max-width: 560px){
-      .four{ grid-template-columns: 1fr; }
-    }
-
-    /* Top nav */
-    .nav{
-      position:sticky; top:0; z-index:30;
-      backdrop-filter: blur(14px);
-      background: linear-gradient(180deg, rgba(7,7,17,.75), rgba(7,7,17,.35));
-      border-bottom:1px solid rgba(255,255,255,.08);
-    }
-    .navInner{
-      display:flex; align-items:center; justify-content:space-between;
-      padding: 14px 0;
-      gap: 16px;
-    }
-    .brand{
-      display:flex; align-items:center; gap:12px;
-      text-decoration:none; color: var(--text);
-      min-width: 240px;
-    }
-    .brand img{
-      width:42px; height:42px; border-radius: 14px;
-      box-shadow: 0 10px 30px rgba(124,58,237,.20);
-      background: rgba(255,255,255,.06);
-    }
-    .brand .t{
-      display:flex; flex-direction:column; line-height:1.1;
-    }
-    .brand .t strong{
-      font-weight:800; letter-spacing:.2px;
-    }
-    .brand .t span{
-      font-size: 12px; color: var(--muted);
-    }
-
-    .navLinks{
-      display:flex; align-items:center; gap:14px;
-    }
-    .navLinks a{
-      color: var(--muted); text-decoration:none;
-      font-size: 13px; font-weight: 600;
-      padding: 10px 10px;
-      border-radius: 999px;
-      transition: all .25s var(--ease);
-      position:relative;
-      outline: none;
-    }
-    .navLinks a:hover{
-      color: rgba(255,255,255,.92);
-      background: rgba(255,255,255,.06);
-    }
-    .pill{
-      display:flex; align-items:center; gap:10px;
-      padding: 10px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.10);
-      color: rgba(255,255,255,.92);
-      text-decoration:none;
-      font-size: 13px;
-      font-weight: 700;
-      transition: transform .25s var(--ease), background .25s var(--ease), border-color .25s var(--ease);
-      white-space: nowrap;
-    }
-    .pill:hover{ transform: translateY(-1px); background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.18); }
-    .pill .dot{
-      width:8px; height:8px; border-radius:50%;
-      background: radial-gradient(circle at 30% 30%, var(--brand2), var(--brand1));
-      box-shadow: 0 10px 30px rgba(124,58,237,.35);
-    }
-
-    .menuBtn{
-      display:none;
-      width:44px; height:44px; border-radius: 14px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.10);
-      color: rgba(255,255,255,.92);
-      align-items:center; justify-content:center;
-      cursor:pointer;
-    }
-    .menuBtn svg{ width:22px; height:22px; }
-    @media (max-width: 980px){
-      .navLinks{ display:none; }
-      .menuBtn{ display:flex; }
-      .brand{ min-width:auto; }
-    }
-
-    .mobilePanel{
-      display:none;
-      border-top: 1px solid rgba(255,255,255,.08);
-      padding: 12px 0 16px;
-    }
-    .mobilePanel.open{ display:block; }
-    .mobilePanel .links{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-    .mobilePanel a{
-      text-decoration:none;
-      color: rgba(255,255,255,.92);
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.10);
-      border-radius: 14px;
-      padding: 12px 12px;
-      font-weight: 700;
-      font-size: 13px;
-    }
-
-    /* Hero */
-    header.hero{
-      padding: clamp(26px, 5vw, 54px) 0 18px;
-    }
-    .heroCard{
-      border-radius: var(--r2);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      border: 1px solid rgba(255,255,255,.10);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-      position:relative;
-    }
-    .heroGrid{
-      display:grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap: 0;
-    }
-    @media (max-width: 980px){
-      .heroGrid{ grid-template-columns: 1fr; }
-    }
-    .heroLeft{
-      padding: clamp(18px, 3.2vw, 34px);
-      position:relative;
-    }
-    .kicker{
-      display:inline-flex; align-items:center; gap:10px;
-      padding: 8px 12px;
-      border-radius:999px;
-      background: rgba(124,58,237,.14);
-      border: 1px solid rgba(167,139,250,.25);
-      color: rgba(255,255,255,.92);
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: .35px;
-    }
-    .kicker .spark{
-      width:10px; height:10px; border-radius:50%;
-      background: radial-gradient(circle at 30% 30%, var(--brand2), var(--brand1));
-      box-shadow: 0 12px 34px rgba(124,58,237,.35);
-    }
-    h1{
-      margin: 14px 0 10px;
-      font-family: "Playfair Display", serif;
-      font-size: var(--h1);
-      line-height: 1.02;
-      letter-spacing: -0.5px;
-    }
-    .lead{
-      font-size: var(--p);
-      line-height: 1.65;
-      color: var(--muted);
-      max-width: 62ch;
-      margin: 0 0 18px;
-    }
-    .ctaRow{
-      display:flex; flex-wrap:wrap; gap:10px;
-      margin-top: 18px;
-    }
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center; gap:10px;
-      padding: 12px 14px;
-      border-radius: 16px;
-      text-decoration:none;
-      font-weight: 900;
-      font-size: 13px;
-      letter-spacing:.2px;
-      transition: transform .25s var(--ease), background .25s var(--ease), border-color .25s var(--ease), box-shadow .25s var(--ease);
-      user-select:none;
-      cursor:pointer;
-    }
-    .btnPrimary{
-      background: linear-gradient(135deg, rgba(124,58,237,.92), rgba(244,114,182,.78));
-      color: rgba(255,255,255,.98);
-      box-shadow: 0 20px 60px rgba(124,58,237,.26);
-      border: 1px solid rgba(255,255,255,.10);
-    }
-    .btnPrimary:hover{ transform: translateY(-2px); box-shadow: 0 26px 70px rgba(124,58,237,.33); }
-    .btnGhost{
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.12);
-      color: rgba(255,255,255,.92);
-    }
-    .btnGhost:hover{ transform: translateY(-2px); background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.18); }
-
-    .miniFacts{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-top: 18px;
-    }
-    @media (max-width: 560px){
-      .miniFacts{ grid-template-columns: 1fr; }
-    }
-    .fact{
-      border-radius: 18px;
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.10);
-      padding: 12px 12px;
-    }
-    .fact strong{ display:block; font-size: 13px; font-weight: 900; }
-    .fact span{ display:block; margin-top:4px; font-size: 12px; color: var(--muted); line-height:1.4; }
-
-    .heroRight{
-      position:relative;
-      min-height: 420px;
-      border-left: 1px solid rgba(255,255,255,.10);
-      background: radial-gradient(500px 280px at 30% 20%, rgba(167,139,250,.18), transparent 55%),
-                  radial-gradient(500px 280px at 60% 70%, rgba(244,114,182,.12), transparent 55%),
-                  rgba(255,255,255,.02);
-    }
-    @media (max-width: 980px){
-      .heroRight{ border-left: none; border-top:1px solid rgba(255,255,255,.10); min-height: 380px; }
-    }
-    .imgStack{
-      position:absolute; inset: 14px;
-      display:grid;
-      grid-template-columns: 1fr;
-      grid-template-rows: 1fr;
-      place-items:stretch;
-    }
-    .imgStack .frame{
-      border-radius: 26px;
-      overflow:hidden;
-      border: 1px solid rgba(255,255,255,.10);
-      box-shadow: 0 22px 80px rgba(0,0,0,.55);
-      position:relative;
-      background: rgba(255,255,255,.04);
-    }
-    .imgStack img{
-      width:100%; height:100%;
-      object-fit: cover;
-      display:block;
-      transform: scale(1.03);
-      filter: saturate(1.02) contrast(1.02);
-    }
-    .imgBadge{
-      position:absolute; left:14px; top:14px;
-      display:inline-flex; align-items:center; gap:10px;
-      padding: 10px 12px;
-      border-radius: 999px;
-      background: rgba(0,0,0,.38);
-      border: 1px solid rgba(255,255,255,.16);
-      color: rgba(255,255,255,.92);
-      backdrop-filter: blur(10px);
-      font-weight: 900;
-      font-size: 12px;
-    }
-    .imgBadge .ring{
-      width:10px; height:10px; border-radius:50%;
-      background: radial-gradient(circle at 30% 30%, var(--ok), rgba(52,211,153,.35));
-      box-shadow: 0 16px 40px rgba(52,211,153,.25);
-    }
-
-    /* Marquee */
-    .marquee{
-      margin: 18px 0 0;
-      border-top: 1px solid rgba(255,255,255,.08);
-      border-bottom: 1px solid rgba(255,255,255,.08);
-      background: rgba(255,255,255,.02);
-      overflow:hidden;
-    }
-    .track{
-      display:flex;
-      gap: 28px;
-      padding: 10px 0;
-      white-space: nowrap;
-      will-change: transform;
-    }
-    .chip{
-      display:inline-flex; align-items:center; gap:10px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.10);
-      color: rgba(255,255,255,.82);
-      font-weight: 800;
-      font-size: 12px;
-    }
-    .chip i{
-      width:10px; height:10px; border-radius: 3px;
-      background: linear-gradient(135deg, rgba(167,139,250,.9), rgba(244,114,182,.75));
-      display:inline-block;
-    }
-
-    /* Sections */
-    section{
-      padding: clamp(34px, 6vw, 74px) 0;
-    }
-    .sectionHead{
-      display:flex; align-items:flex-end; justify-content:space-between; gap: 18px;
-      margin-bottom: 18px;
-    }
-    h2{
-      margin:0;
-      font-family: "Playfair Display", serif;
-      font-size: var(--h2);
-      letter-spacing: -0.2px;
-      line-height: 1.1;
-    }
-    .sub{
-      margin:0;
-      color: var(--muted);
-      font-size: var(--p);
-      line-height: 1.65;
-      max-width: 66ch;
-    }
-    .tiny{
-      font-size: 12px; color: var(--muted2);
-      line-height: 1.55;
-      max-width: 56ch;
-    }
-
-    .card{
-      border-radius: var(--r);
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.10);
-      box-shadow: 0 18px 60px rgba(0,0,0,.40);
-      padding: clamp(14px, 2.1vw, 18px);
-      position:relative;
-      overflow:hidden;
-      transition: transform .25s var(--ease), border-color .25s var(--ease), background .25s var(--ease);
-    }
-    .card:hover{
-      transform: translateY(-3px);
-      border-color: rgba(255,255,255,.18);
-      background: rgba(255,255,255,.06);
-    }
-    .card:before{
-      content:"";
-      position:absolute; inset:-1px;
-      background: radial-gradient(600px 260px at 10% 10%, rgba(124,58,237,.10), transparent 55%),
-                  radial-gradient(420px 220px at 90% 30%, rgba(244,114,182,.08), transparent 55%);
-      opacity: .9;
-      pointer-events:none;
-    }
-    .card > *{ position:relative; z-index:1; }
-
-    .icon{
-      width:44px; height:44px; border-radius: 16px;
-      display:grid; place-items:center;
-      background: rgba(124,58,237,.12);
-      border:1px solid rgba(167,139,250,.22);
-      box-shadow: 0 22px 60px rgba(124,58,237,.18);
-    }
-    .icon svg{ width:20px; height:20px; color: rgba(255,255,255,.92); }
-
-    .card h3{
-      margin: 12px 0 6px;
-      font-size: var(--h3);
-      letter-spacing: .1px;
-    }
-    .card p{
-      margin:0;
-      font-size: var(--p);
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    .list{
-      margin: 12px 0 0;
-      padding: 0;
-      list-style:none;
-      display:grid;
-      gap: 8px;
-    }
-    .li{
-      display:flex; gap:10px; align-items:flex-start;
-      color: rgba(255,255,255,.82);
-      font-size: 13px;
-      line-height:1.55;
-    }
-    .li b{
-      width:18px; height:18px; border-radius: 7px;
-      display:grid; place-items:center;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.12);
-      margin-top:2px;
-      flex: 0 0 auto;
-    }
-    .li b svg{ width:12px; height:12px; opacity:.95; }
-
-    /* “Igloo-ish” sticky timeline */
-    .railWrap{
-      position:relative;
-      border-radius: var(--r2);
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.03);
-      overflow:hidden;
-      box-shadow: var(--shadow);
-    }
-    .rail{
-      display:grid;
-      grid-template-columns: 1.05fr .95fr;
-      min-height: 460px;
-    }
-    @media (max-width: 980px){
-      .rail{ grid-template-columns: 1fr; min-height: auto; }
-    }
-    .railLeft{
-      padding: clamp(18px, 3vw, 28px);
-      border-right: 1px solid rgba(255,255,255,.10);
-      position:relative;
-    }
-    @media (max-width: 980px){
-      .railLeft{ border-right:none; border-bottom:1px solid rgba(255,255,255,.10); }
-    }
-    .railLeft .quote{
-      margin-top: 12px;
-      padding: 14px 14px;
-      border-radius: 18px;
-      background: rgba(124,58,237,.10);
-      border: 1px solid rgba(167,139,250,.18);
-      color: rgba(255,255,255,.86);
-      line-height: 1.7;
-      font-size: var(--p);
-    }
-    .quote em{
-      font-family:"Playfair Display", serif;
-      font-style: normal;
-      color: rgba(255,255,255,.94);
-    }
-
-    .railRight{
-      position:relative;
-      padding: 0;
-      background:
-        radial-gradient(700px 320px at 30% 15%, rgba(167,139,250,.16), transparent 55%),
-        radial-gradient(700px 320px at 70% 85%, rgba(96,165,250,.12), transparent 55%),
-        rgba(255,255,255,.02);
-    }
-    .railSticky{
-      position:sticky;
-      top: 84px;
-      padding: clamp(14px, 2.6vw, 22px);
-      height: fit-content;
-    }
-    @media (max-width: 980px){
-      .railSticky{ position:relative; top:auto; }
-    }
-    .step{
-      border-radius: 20px;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.05);
-      padding: 14px 14px;
-      display:flex; gap:12px;
-      margin-bottom: 12px;
-      transition: transform .25s var(--ease), border-color .25s var(--ease);
-    }
-    .step:hover{ transform: translateY(-2px); border-color: rgba(255,255,255,.18); }
-    .step .n{
-      width:34px; height:34px; border-radius: 14px;
-      display:grid; place-items:center;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.12);
-      font-weight: 900;
-      color: rgba(255,255,255,.92);
-      flex: 0 0 auto;
-    }
-    .step .meta strong{ display:block; font-size: 13px; font-weight: 900; }
-    .step .meta span{ display:block; margin-top:2px; font-size: 12px; color: var(--muted); line-height:1.5; }
-
-    /* Course cards with image */
-    .course{
-      padding: 0;
-      overflow:hidden;
-    }
-    .course .top{
-      height: 160px;
-      background: rgba(255,255,255,.05);
-      border-bottom: 1px solid rgba(255,255,255,.10);
-      position:relative;
-      overflow:hidden;
-    }
-    .course .top img{
-      width:100%; height:100%;
-      object-fit: cover;
-      display:block;
-      transform: scale(1.06);
-      filter: saturate(1.02) contrast(1.02);
-    }
-    .course .top:after{
-      content:"";
-      position:absolute; inset:0;
-      background: linear-gradient(180deg, rgba(7,7,17,.05), rgba(7,7,17,.80));
-    }
-    .course .body{
-      padding: 14px 14px 16px;
-      position:relative;
-    }
-    .tagRow{
-      display:flex; flex-wrap:wrap; gap:8px;
-      margin-top: 10px;
-    }
-    .tag{
-      font-size: 11px;
-      font-weight: 900;
-      letter-spacing:.25px;
-      color: rgba(255,255,255,.84);
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.10);
-      border-radius: 999px;
-      padding: 7px 10px;
-    }
-    .mutedBox{
-      margin-top: 12px;
-      border-radius: 18px;
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.10);
-      padding: 12px 12px;
-      color: rgba(255,255,255,.80);
-      font-size: 13px;
-      line-height: 1.65;
-    }
-
-    /* Testimonials */
-    .testi{
-      display:flex; flex-direction:column; gap:10px;
-    }
-    .stars{
-      display:flex; gap:4px;
-      opacity:.95;
-    }
-    .stars svg{ width:16px; height:16px; color: rgba(244,114,182,.9); filter: drop-shadow(0 10px 20px rgba(244,114,182,.20)); }
-    .who{
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-      margin-top: 10px;
-      border-top: 1px solid rgba(255,255,255,.10);
-      padding-top: 10px;
-      color: rgba(255,255,255,.84);
-      font-size: 13px;
-      font-weight: 800;
-    }
-    .who span{ color: var(--muted); font-weight: 700; font-size: 12px; }
-
-    /* Contact */
-    .contactCard{
-      border-radius: var(--r2);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      border: 1px solid rgba(255,255,255,.10);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-    .contactGrid{
-      display:grid;
-      grid-template-columns: .9fr 1.1fr;
-    }
-    @media (max-width: 980px){
-      .contactGrid{ grid-template-columns: 1fr; }
-    }
-    .contactLeft{
-      padding: clamp(18px, 3vw, 26px);
-      border-right: 1px solid rgba(255,255,255,.10);
-      background:
-        radial-gradient(700px 300px at 20% 10%, rgba(124,58,237,.14), transparent 55%),
-        radial-gradient(600px 260px at 80% 85%, rgba(244,114,182,.10), transparent 55%),
-        rgba(255,255,255,.02);
-    }
-    @media (max-width: 980px){
-      .contactLeft{ border-right:none; border-bottom:1px solid rgba(255,255,255,.10); }
-    }
-    .contactRight{
-      padding: clamp(18px, 3vw, 26px);
-    }
-    .kv{
-      display:grid;
-      gap: 10px;
-      margin-top: 14px;
-    }
-    .kv .row{
-      display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
-      padding: 12px 12px;
-      border-radius: 18px;
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.10);
-    }
-    .kv .row strong{
-      font-size: 12px; font-weight: 900; color: rgba(255,255,255,.88);
-      letter-spacing:.2px;
-      display:block;
-    }
-    .kv .row span, .kv .row a{
-      margin-top:4px;
-      display:block;
-      color: var(--muted);
-      font-size: 13px;
-      text-decoration:none;
-      line-height: 1.55;
-    }
-    .kv .row a:hover{ color: rgba(255,255,255,.92); text-decoration: underline; }
-
-    form{
-      display:grid;
-      gap: 10px;
-      margin-top: 8px;
-    }
-    .field{
-      display:grid; gap:6px;
-    }
-    label{
-      font-size: 12px; font-weight: 900; color: rgba(255,255,255,.86);
-      letter-spacing:.2px;
-    }
-    input, textarea, select{
-      width:100%;
-      border-radius: 16px;
-      padding: 12px 12px;
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.12);
-      color: rgba(255,255,255,.92);
-      outline:none;
-      font: inherit;
-      font-size: 14px;
-      transition: border-color .25s var(--ease), background .25s var(--ease);
-    }
-    textarea{ min-height: 120px; resize: vertical; }
-    input:focus, textarea:focus, select:focus{
-      border-color: rgba(167,139,250,.38);
-      background: rgba(255,255,255,.06);
-    }
-    .row2{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-    @media (max-width: 560px){
-      .row2{ grid-template-columns: 1fr; }
-    }
-    .hint{
-      font-size: 12px;
-      color: var(--muted2);
-      line-height: 1.5;
-      margin-top: 6px;
-    }
-
-    /* FAQ */
-    .faq{
-      display:grid;
-      gap: 10px;
-    }
-    details{
-      border-radius: 18px;
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.10);
-      padding: 12px 12px;
-      overflow:hidden;
-    }
-    summary{
-      list-style:none;
-      cursor:pointer;
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-      font-weight: 900;
-      color: rgba(255,255,255,.90);
-      font-size: 13px;
-    }
-    summary::-webkit-details-marker{ display:none; }
-    details p{
-      margin: 10px 0 0;
-      color: var(--muted);
-      line-height: 1.7;
-      font-size: 13px;
-    }
-    .chev{
-      width:34px; height:34px; border-radius: 14px;
-      display:grid; place-items:center;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.10);
-      transition: transform .25s var(--ease);
-      flex: 0 0 auto;
-    }
-    details[open] .chev{ transform: rotate(180deg); }
-
-    /* Footer */
-    footer{
-      padding: 32px 0 40px;
-      border-top: 1px solid rgba(255,255,255,.08);
-      background: rgba(0,0,0,.12);
-    }
-    .footGrid{
-      display:grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap: 20px;
-      align-items:start;
-    }
-    @media (max-width: 980px){
-      .footGrid{ grid-template-columns: 1fr; }
-    }
-    .footSmall{
-      margin: 10px 0 0;
-      color: var(--muted2);
-      font-size: 12px;
-      line-height: 1.65;
-    }
-    .legal{
-      display:flex; flex-wrap:wrap; gap:10px;
-      margin-top: 12px;
-    }
-    .linkBtn{
-      padding: 10px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.10);
-      color: rgba(255,255,255,.88);
-      font-size: 12px;
-      font-weight: 900;
-      cursor:pointer;
-      transition: transform .25s var(--ease), background .25s var(--ease), border-color .25s var(--ease);
-    }
-    .linkBtn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.18); }
-
-    /* Modal */
-    .modal{
-      position:fixed; inset:0;
-      display:none;
-      z-index:100;
-      padding: 18px;
-      background: rgba(0,0,0,.55);
-      backdrop-filter: blur(10px);
-    }
-    .modal.open{ display:grid; place-items:center; }
-    .dialog{
-      width:min(980px, 100%);
-      max-height: 86vh;
-      overflow:auto;
-      border-radius: 26px;
-      background: rgba(12,12,20,.92);
-      border: 1px solid rgba(255,255,255,.14);
-      box-shadow: 0 30px 120px rgba(0,0,0,.65);
-    }
-    .dialogHead{
-      position:sticky; top:0;
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-      padding: 14px 14px;
-      background: rgba(12,12,20,.92);
-      border-bottom: 1px solid rgba(255,255,255,.10);
-      z-index: 2;
-    }
-    .dialogHead strong{
-      font-weight: 1000;
-      letter-spacing:.2px;
-    }
-    .closeBtn{
-      width:44px; height:44px;
-      border-radius: 16px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.12);
-      color: rgba(255,255,255,.92);
-      cursor:pointer;
-      display:grid; place-items:center;
-    }
-    .dialogBody{
-      padding: 14px 16px 18px;
-      color: rgba(255,255,255,.80);
-      line-height: 1.75;
-      font-size: 13px;
-    }
-    .dialogBody h4{
-      margin: 14px 0 6px;
-      font-size: 13px;
-      letter-spacing:.2px;
-      color: rgba(255,255,255,.92);
-    }
-    .dialogBody code{
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.10);
-      padding: 2px 6px;
-      border-radius: 8px;
-      color: rgba(255,255,255,.90);
-    }
-
-    /* Utilities */
-    .divider{
-      height:1px;
-      background: rgba(255,255,255,.08);
-      margin: 18px 0;
-    }
-    .reveal{ opacity:0; transform: translateY(14px); }
-    .shadowGlow{
-      box-shadow: var(--glow);
-    }
-    .sr{
-      position:absolute !important;
-      width:1px !important; height:1px !important;
-      padding:0 !important; margin:-1px !important;
-      overflow:hidden !important; clip:rect(0,0,0,0) !important;
-      white-space:nowrap !important; border:0 !important;
-    }
-    .anchor{
-      position:relative;
-      top: -88px;
-    }
-  </style>
-
-  <!-- Structured data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "MedicalBusiness",
-    "name": "Hebamme Rieke Löbker",
-    "image": "https://hebamme-rieke.de/wp-content/uploads/2018/07/Rieke-Petersen_Logo_violett_150x150.png",
-    "telephone": "+49 160 96477650",
-    "email": "info@hebamme-rieke.de",
-    "areaServed": "Rheine und Umgebung",
-    "address": [
-      {
-        "@type": "PostalAddress",
-        "streetAddress": "Humboldtplatz 22",
-        "postalCode": "48429",
-        "addressLocality": "Rheine",
-        "addressCountry": "DE"
-      },
-      {
-        "@type": "PostalAddress",
-        "streetAddress": "Surenburgstr. 229",
-        "postalCode": "48429",
-        "addressLocality": "Rheine",
-        "addressCountry": "DE"
-      }
-    ],
-    "url": "https://hebamme-rieke.de"
-  }
-  </script>
-</head>
-
-<body>
-  <div class="aurora" aria-hidden="true">
-    <div class="blob b1" style="left:-10%; top:-10%"></div>
-    <div class="blob b2" style="left:52%; top:-18%"></div>
-    <div class="blob b3" style="left:26%; top:48%"></div>
-  </div>
-  <div class="noise" aria-hidden="true"></div>
-
-  <!-- Custom cursor -->
-  <div class="cursor" aria-hidden="true"></div>
-  <div class="cursorDot" aria-hidden="true"></div>
-
-  <div class="wrap">
-    <!-- NAV -->
-    <nav class="nav">
-      <div class="container">
-        <div class="navInner">
-          <a class="brand" href="#top" data-cursor="link">
-            <img src="https://hebamme-rieke.de/wp-content/uploads/2018/07/Rieke-Petersen_Logo_violett_150x150.png" alt="Hebamme Rieke Logo" loading="eager" />
-            <div class="t">
-              <strong>Hebamme Rieke Löbker</strong>
-              <span>Deine achtsame Hebamme · Rheine & Umgebung</span>
-            </div>
-          </a>
-
-          <div class="navLinks" role="navigation" aria-label="Hauptnavigation">
-            <a href="#leistungen" data-cursor="link">Leistungen</a>
-            <a href="#kurse" data-cursor="link">Kurse</a>
-            <a href="#ablauf" data-cursor="link">Ablauf</a>
-            <a href="#stimmen" data-cursor="link">Stimmen</a>
-            <a href="#faq" data-cursor="link">FAQ</a>
-            <a href="#kontakt" class="pill" data-cursor="link"><span class="dot"></span> Kontakt aufnehmen</a>
-          </div>
-
-          <button class="menuBtn" id="menuBtn" aria-label="Menü öffnen">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-          </button>
-        </div>
-
-        <div class="mobilePanel" id="mobilePanel" aria-label="Mobile Navigation">
-          <div class="links">
-            <a href="#leistungen">Leistungen</a>
-            <a href="#kurse">Kurse</a>
-            <a href="#ablauf">Ablauf</a>
-            <a href="#stimmen">Stimmen</a>
-            <a href="#faq">FAQ</a>
-            <a href="#kontakt">Kontakt</a>
-          </div>
-        </div>
-      </div>
-    </nav>
-
-    <!-- HERO -->
-    <span class="anchor" id="top"></span>
-    <header class="hero">
-      <div class="container">
-        <div class="heroCard shadowGlow">
-          <div class="heroGrid">
-            <div class="heroLeft">
-              <div class="kicker reveal"><span class="spark"></span> Deine achtsame Hebamme · warm, klar, fachkundig</div>
-              <h1 class="reveal">Du & dein Baby — bei mir seid ihr in guten Händen.</h1>
-              <p class="lead reveal">
-                Schwangerschaft, Geburt, Wochenbett: das ist viel Gefühl — und oft auch viele Fragen.
-                Ich begleite dich in Rheine und Umgebung feinfühlig und verlässlich, damit du dich sicher fühlst
-                und auf dein Bauchgefühl vertrauen kannst.
-              </p>
-
-              <div class="ctaRow reveal">
-                <a class="btn btnPrimary" href="#kontakt" data-cursor="link">
-                  Anfrage senden
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <path d="M5 12h12m-6-6 6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </a>
-                <a class="btn btnGhost" href="tel:+4916096477650" data-cursor="link">
-                  Direkt anrufen
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.12.86.31 1.7.57 2.5a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.58-1.09a2 2 0 0 1 2.11-.45c.8.26 1.64.45 2.5.57A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </a>
-                <a class="btn btnGhost" href="mailto:info@hebamme-rieke.de?subject=Anfrage%20Hebammenbetreuung&body=Hallo%20Rieke%2C%0A%0Aich%20m%C3%B6chte%20mich%20gerne%20bei%20dir%20melden.%20Mein%20ET%20ist%3A%20_____%0AIch%20wohne%20in%3A%20_____%0AMeine%20Frage%20%2F%20Wunsch%3A%20_____%0A%0ALiebe%20Gr%C3%BC%C3%9Fe" data-cursor="link">
-                  E-Mail schreiben
-                </a>
-              </div>
-
-              <div class="miniFacts">
-                <div class="fact reveal">
-                  <strong>Einzugsgebiet</strong>
-                  <span>Rheine & Umkreis (ca. 20 km) · Hausbesuche im Wochenbett.</span>
-                </div>
-                <div class="fact reveal">
-                  <strong>Schwerpunkte</strong>
-                  <span>Schwangerschaft · Wochenbett · Still- & Beikostberatung · Kurse.</span>
-                </div>
-                <div class="fact reveal">
-                  <strong>Standorte</strong>
-                  <span>Bauchgeflüster (Humboldtplatz 22) + Praxisraum (Surenburgstr. 229).</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="heroRight">
-              <div class="imgStack">
-                <div class="frame">
-                  <img src="https://hebamme-rieke.de/wp-content/uploads/2018/05/Rieke_Petersen_Hebamme_500x500_Willkommen_6.jpg" alt="Hebamme Rieke mit Baby – achtsame Begleitung" loading="eager" />
-                  <div class="imgBadge"><span class="ring"></span> Termine nach Verfügbarkeit · früh melden lohnt sich</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="marquee" aria-hidden="true">
-            <div class="track" id="marquee">
-              <span class="chip"><i></i> Vorsorge</span>
-              <span class="chip"><i></i> Beratung</span>
-              <span class="chip"><i></i> Akupunktur</span>
-              <span class="chip"><i></i> K-Taping</span>
-              <span class="chip"><i></i> Wochenbett-Nachsorge</span>
-              <span class="chip"><i></i> Stillberatung</span>
-              <span class="chip"><i></i> Beikosteinführung</span>
-              <span class="chip"><i></i> Geburtsvorbereitung</span>
-              <span class="chip"><i></i> Rückbildung</span>
-              <span class="chip"><i></i> Babymassage</span>
-
-              <!-- duplicate for seamless loop -->
-              <span class="chip"><i></i> Vorsorge</span>
-              <span class="chip"><i></i> Beratung</span>
-              <span class="chip"><i></i> Akupunktur</span>
-              <span class="chip"><i></i> K-Taping</span>
-              <span class="chip"><i></i> Wochenbett-Nachsorge</span>
-              <span class="chip"><i></i> Stillberatung</span>
-              <span class="chip"><i></i> Beikosteinführung</span>
-              <span class="chip"><i></i> Geburtsvorbereitung</span>
-              <span class="chip"><i></i> Rückbildung</span>
-              <span class="chip"><i></i> Babymassage</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <!-- ABOUT / PHILOSOPHY -->
-    <section id="ueber">
-      <div class="container">
-        <div class="railWrap">
-          <div class="rail">
-            <div class="railLeft">
-              <div class="sectionHead">
-                <div>
-                  <h2 class="reveal">Über mich · Haltung · Vertrauen</h2>
-                  <p class="sub reveal">
-                    Du sollst dich nicht „durchkämpfen müssen“. Du sollst dich gehalten fühlen — fachlich und menschlich.
-                  </p>
-                </div>
-              </div>
-
-              <div class="quote reveal">
-                <em>„Zwei Dinge sollen Kinder von ihren Eltern bekommen: Wurzeln und Flügel.“</em><br/>
-                <span style="color:rgba(255,255,255,.72); font-weight:800;">— Johann Wolfgang von Goethe</span>
-              </div>
-
-              <div class="divider"></div>
-
-              <p class="tiny reveal">
-                Ich betreue dich in Rheine und Umgebung während der Schwangerschaft und nach der Geburt.
-                Termine in der Schwangerschaft können u. a. in der Hebammenpraxis <strong>Bauchgeflüster</strong> stattfinden (Humboldtplatz 22).
-                Zusätzlich gibt es meinen Praxisraum für Vorsorge & Akupunktur (Surenburgstr. 229).
-              </p>
-
-              <div class="ctaRow reveal">
-                <a class="btn btnGhost" href="#ablauf" data-cursor="link">So läuft’s ab</a>
-                <a class="btn btnGhost" href="#leistungen" data-cursor="link">Leistungen ansehen</a>
-              </div>
-            </div>
-
-            <div class="railRight">
-              <div class="railSticky">
-                <div class="step reveal">
-                  <div class="n">1</div>
-                  <div class="meta">
-                    <strong>Früh melden</strong>
-                    <span>Ein kurzer Kontakt reicht, um zu prüfen, ob ich einen Betreuungsplatz anbieten kann.</span>
-                  </div>
-                </div>
-                <div class="step reveal">
-                  <div class="n">2</div>
-                  <div class="meta">
-                    <strong>Kennenlernen</strong>
-                    <span>Wir klären Erwartungen, Bedürfnisse, Ängste — und definieren deinen individuellen Weg.</span>
-                  </div>
-                </div>
-                <div class="step reveal">
-                  <div class="n">3</div>
-                  <div class="meta">
-                    <strong>Begleitung</strong>
-                    <span>Schwangerschaft · Wochenbett · Still/Beikost — mit klaren Antworten und ruhiger Orientierung.</span>
-                  </div>
-                </div>
-                <div class="step reveal">
-                  <div class="n">4</div>
-                  <div class="meta">
-                    <strong>Wissen, das bleibt</strong>
-                    <span>Kurse & Übungen, die im Alltag wirklich helfen — ohne Druck, ohne „Perfekt sein müssen“.</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SERVICES -->
-    <span class="anchor" id="leistungen"></span>
-    <section>
-      <div class="container">
-        <div class="sectionHead">
-          <div>
-            <h2 class="reveal">Leistungen, die dich wirklich entlasten</h2>
-            <p class="sub reveal">
-              Drei Phasen — ein Ziel: Sicherheit, Orientierung und ein gutes Gefühl im eigenen Körper.
-            </p>
-          </div>
-          <p class="tiny reveal">
-            Hinweis: Einzelne Leistungen sind Krankenkassenleistungen; manche (z. B. bestimmte Zusatzleistungen) sind Eigenleistung.
-          </p>
-        </div>
-
-        <div class="grid three">
-          <!-- Schwangerschaft -->
-          <article class="card reveal" data-cursor="card">
-            <div class="icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none">
-                <path d="M12 21s-7-4.5-7-11a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 6.5-7 11-7 11z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <h3>Vor der Geburt</h3>
-            <p>
-              Vorsorge, Beratung und Unterstützung bei Beschwerden — plus Akupunktur & K-Taping,
-              wenn du gezielt Hilfe brauchst.
-            </p>
-            <ul class="list">
-              <li class="li"><b aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></b> Vorsorgeuntersuchungen (ohne Ultraschall)</li>
-              <li class="li"><b aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></b> Schwangerenberatung (Fragen, Ängste, Beschwerden)</li>
-              <li class="li"><b aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></b> Akupunktur (u. a. Übelkeit, Migräne, Ödeme; geburtsvorbereitend)</li>
-              <li class="li"><b aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></b> K-Taping (z. B. Rücken, Ödeme, Bauchstütze)</li>
-            </ul>
-            <div class="ctaRow" style="margin-top:14px;">
-              <a class="btn btnGhost" href="#ablauf" data-cursor="link">Betreuung starten</a>
-              <a class="btn btnGhost" href="#kontakt" data-cursor="link">Kurz anfragen</a>
-            </div>
-          </article>
-
-          <!-- Wochenbett -->
-          <article class="card reveal" data-cursor="card">
-            <div class="icon" aria-hidden="true" style="background: rgba(244,114,182,.12); border-color: rgba(244,114,182,.22); box-shadow: 0 22px 60px rgba(244,114,182,.16);">
-              <svg viewBox="0 0 24 24" fill="none">
-                <path d="M12 3v18M3 12h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                <path d="M7.5 7.5c2.8-2.8 6.2-2.8 9 0M7.5 16.5c2.8 2.8 6.2 2.8 9 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <h3>Nach der Geburt (Wochenbett)</h3>
-            <p>
-              Hausbesuche, Nachsorge, Still- und Beikostberatung. Du bekommst klare Antworten, wenn’s unübersichtlich wird.
-            </p>
-            <ul class="list">
-              <li class="li"><b aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></b> Nachsorge im Wochenbett (Mutter & Kind)</li>
-              <li class="li"><b aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></b> Stillberatung (Positionen, Milchstau, Abstillen)</li>
-              <li class="li"><b aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></b> Beikosteinführung (Zeitpunkt, Reihenfolge, Praxis)</li>
-              <li class="li"><b aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></b> Praktische Hilfe vor Ort (Wickeln, Pflege, Alltag)</li>
-            </ul>
-            <div class="ctaRow" style="margin-top:14px;">
-              <a class="btn btnGhost" href="#faq" data-cursor="link">Häufige Fragen</a>
-              <a class="btn btnGhost" href="#kontakt" data-cursor="link">Wochenbett anfragen</a>
-            </div>
-          </article>
-
-          <!-- Kurse -->
-          <article class="card reveal" data-cursor="card">
-            <div class="icon" aria-hidden="true" style="background: rgba(96,165,250,.12); border-color: rgba(96,165,250,.22); box-shadow: 0 22px 60px rgba(96,165,250,.14);">
-              <svg viewBox="0 0 24 24" fill="none">
-                <path d="M4 19V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                <path d="M8 7h8M8 11h8M8 15h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <h3>Kurse</h3>
-            <p>
-              Wissen, das beruhigt. Übungen, die funktionieren. Atmosphäre, in der du dich wohlfühlst.
-            </p>
-            <ul class="list">
-              <li class="li"><b aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></b> Geburtsvorbereitung (inkl. Partnerabende)</li>
-              <li class="li"><b aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></b> Rückbildung (Beckenboden, Rücken, Bauch, Wahrnehmung)</li>
-              <li class="li"><b aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></b> Babymassage (Ritual, Bindung, Entspannung)</li>
-            </ul>
-            <div class="ctaRow" style="margin-top:14px;">
-              <a class="btn btnGhost" href="#kurse" data-cursor="link">Kurse ansehen</a>
-              <a class="btn btnGhost" href="#kontakt" data-cursor="link">Platz anfragen</a>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- COURSES -->
-    <span class="anchor" id="kurse"></span>
-    <section>
-      <div class="container">
-        <div class="sectionHead">
-          <div>
-            <h2 class="reveal">Kurse</h2>
-            <p class="sub reveal">Du gehst nicht „unvorbereitet“ in die Geburt — und nicht „alleine“ ins Wochenbett.</p>
-          </div>
-          <p class="tiny reveal">Termine & Anmeldung können je nach Kurs variieren. Für externe Kurslisten nutze ggf. die Praxis-Website.</p>
-        </div>
-
-        <div class="grid three">
-          <article class="card course reveal" data-cursor="card">
-            <div class="top">
-              <img src="https://hebamme-rieke.de/wp-content/uploads/2018/06/Hebamme-Rieke-Rheine_Babybauch_vor-der-Schwangerschaft_1920x1080_3.jpg" alt="Geburtsvorbereitung – Schwangerschaft" loading="lazy" />
-            </div>
-            <div class="body">
-              <h3>Geburtsvorbereitung</h3>
-              <p>Orientierung, mentale Ruhe und praktische Vorbereitung — inkl. Partnerabende.</p>
-              <div class="tagRow">
-                <span class="tag">Start ca. 30. SSW</span>
-                <span class="tag">7× 120 Min</span>
-                <span class="tag">2 Partnerabende</span>
-              </div>
-              <div class="mutedBox">
-                <strong style="color:rgba(255,255,255,.92)">Kurz & klar:</strong><br/>
-                Zwei Partnerabende · Partnergebühr 30€ · Krankenkassenkarte + Kaution 45€ zur ersten Stunde · i. d. R. dienstags 18–20 Uhr (je nach Kurs).
-              </div>
-              <div class="ctaRow" style="margin-top:12px;">
-                <a class="btn btnGhost" href="#kontakt" data-cursor="link">Platz anfragen</a>
-                <a class="btn btnGhost" href="tel:+4916096477650" data-cursor="link">Anrufen</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="card course reveal" data-cursor="card">
-            <div class="top">
-              <img src="https://hebamme-rieke.de/wp-content/uploads/2018/05/Rieke_Petersen_Hebamme_1920x1080_wochenbett.jpg" alt="Rückbildung – Wochenbett" loading="lazy" />
-            </div>
-            <div class="body">
-              <h3>Rückbildung</h3>
-              <p>Beckenboden, Rücken und Bauch stärken — plus Körperwahrnehmung & Austausch in der Gruppe.</p>
-              <div class="tagRow">
-                <span class="tag">Beckenboden</span>
-                <span class="tag">Rücken/Bauch</span>
-                <span class="tag">Wohlbefinden</span>
-              </div>
-              <div class="mutedBox">
-                Angenehme Gymnastikübungen zur Stärkung der Rücken-, Bauch- und Beckenbodenmuskulatur — mit dem Nebeneffekt, dass dein Körper sich wieder „zu Hause“ anfühlt.
-              </div>
-              <div class="ctaRow" style="margin-top:12px;">
-                <a class="btn btnGhost" href="#kontakt" data-cursor="link">Kursplatz sichern</a>
-                <a class="btn btnGhost" href="#faq" data-cursor="link">Fragen klären</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="card course reveal" data-cursor="card">
-            <div class="top">
-              <img src="https://hebamme-rieke.de/wp-content/uploads/2018/05/Rieke_Petersen_Hebamme_500x500_Willkommen_6.jpg" alt="Babymassage – Bindung" loading="lazy" />
-            </div>
-            <div class="body">
-              <h3>Babymassage</h3>
-              <p>Ein zärtliches Ritual: Nähe, Berührung, Ruhe — und oft spürbare Entspannung.</p>
-              <div class="tagRow">
-                <span class="tag">Bindung</span>
-                <span class="tag">Entspannung</span>
-                <span class="tag">Leboyer-inspiriert</span>
-              </div>
-              <div class="mutedBox">
-                Berührung unterstützt emotionale Wärme. In der Praxis lernen wir Massagegriffe, die du zu Hause anwenden kannst — häufig hilfreich bei Unruhe, Bauchkrämpfen oder Schlaf.
-              </div>
-              <div class="ctaRow" style="margin-top:12px;">
-                <a class="btn btnGhost" href="#kontakt" data-cursor="link">Infos anfragen</a>
-                <a class="btn btnGhost" href="mailto:info@hebamme-rieke.de?subject=Anfrage%20Babymassage" data-cursor="link">Mail</a>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- FLOW / PROCESS -->
-    <span class="anchor" id="ablauf"></span>
-    <section>
-      <div class="container">
-        <div class="sectionHead">
-          <div>
-            <h2 class="reveal">Der Ablauf — ohne Chaos</h2>
-            <p class="sub reveal">
-              Du brauchst keine „perfekte“ Planung. Du brauchst einen klaren nächsten Schritt.
-            </p>
-          </div>
-        </div>
-
-        <div class="grid two">
-          <div class="card reveal" data-cursor="card">
-            <h3>1) Kurze Anfrage</h3>
-            <p>
-              Schick mir deinen errechneten Entbindungstermin (ET), deinen Wohnort und kurz, was du dir wünschst
-              (Schwangerschaft/ Wochenbett/ Kurs). Dann prüfen wir die Verfügbarkeit.
-            </p>
-            <div class="divider"></div>
-            <h3>2) Kennenlernen & Plan</h3>
-            <p>
-              Wir klären: Was brauchst du? Was verunsichert dich? Was soll unbedingt ruhig ablaufen?
-              Daraus ergibt sich dein individueller Betreuungsweg.
-            </p>
-          </div>
-
-          <div class="card reveal" data-cursor="card">
-            <h3>3) Begleitung, die im Alltag greift</h3>
-            <p>
-              In der Schwangerschaft (Vorsorge/Beratung/ggf. Akupunktur/K-Taping) und nach der Geburt
-              (Hausbesuche, Still- & Beikostberatung, praktische Anleitung).
-            </p>
-            <div class="divider"></div>
-            <h3>4) Kurse & Routine</h3>
-            <p>
-              Geburtsvorbereitung, Rückbildung, Babymassage — damit Wissen und Sicherheit nicht nur „im Kopf“ bleiben,
-              sondern im Alltag funktionieren.
-            </p>
-            <div class="ctaRow" style="margin-top:14px;">
-              <a class="btn btnPrimary" href="#kontakt" data-cursor="link">Jetzt anfragen</a>
-              <a class="btn btnGhost" href="tel:+4916096477650" data-cursor="link">Telefon</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- TESTIMONIALS -->
-    <span class="anchor" id="stimmen"></span>
-    <section>
-      <div class="container">
-        <div class="sectionHead">
-          <div>
-            <h2 class="reveal">Stimmen, die zählen</h2>
-            <p class="sub reveal">Vertrauen entsteht nicht durch große Worte — sondern durch Erfahrung.</p>
-          </div>
-        </div>
-
-        <div class="grid three">
-          <article class="card testi reveal" data-cursor="card">
-            <div class="stars" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.3l-6.18 3.7 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62L22 9.24l-5.46 4.73L18.18 21z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.3l-6.18 3.7 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62L22 9.24l-5.46 4.73L18.18 21z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.3l-6.18 3.7 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62L22 9.24l-5.46 4.73L18.18 21z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.3l-6.18 3.7 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62L22 9.24l-5.46 4.73L18.18 21z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.3l-6.18 3.7 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62L22 9.24l-5.46 4.73L18.18 21z"/></svg>
-            </div>
-            <p>
-              „Ich hatte nach dem Kurs das Gefühl, richtig gut vorbereitet zu sein — und auch für die ersten Wochen danach
-              viele hilfreiche Infos und Tipps bekommen zu haben.“
-            </p>
-            <div class="who">Patientin <span>Geburtsvorbereitung</span></div>
-          </article>
-
-          <article class="card testi reveal" data-cursor="card">
-            <div class="stars" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.3l-6.18 3.7 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62L22 9.24l-5.46 4.73L18.18 21z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.3l-6.18 3.7 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62L22 9.24l-5.46 4.73L18.18 21z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.3l-6.18 3.7 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62L22 9.24l-5.46 4.73L18.18 21z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.3l-6.18 3.7 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62L22 9.24l-5.46 4.73L18.18 21z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.3l-6.18 3.7 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62L22 9.24l-5.46 4.73L18.18 21z"/></svg>
-            </div>
-            <p>
-              „Im Wochenbett war es einfach wertvoll, jemanden zu haben, der ruhig bleibt, genau hinschaut
-              und mir Sicherheit gibt — besonders bei Still- und Alltagsfragen.“
-            </p>
-            <div class="who">Mutter <span>Wochenbett-Begleitung</span></div>
-          </article>
-
-          <article class="card testi reveal" data-cursor="card">
-            <div class="stars" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.3l-6.18 3.7 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62L22 9.24l-5.46 4.73L18.18 21z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.3l-6.18 3.7 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62L22 9.24l-5.46 4.73L18.18 21z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.3l-6.18 3.7 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62L22 9.24l-5.46 4.73L18.18 21z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.3l-6.18 3.7 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62L22 9.24l-5.46 4.73L18.18 21z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.3l-6.18 3.7 1.64-7.03L2 9.24l7.19-.62L12 2l2.81 6.62L22 9.24l-5.46 4.73L18.18 21z"/></svg>
-            </div>
-            <p>
-              „Genau die Mischung, die man braucht: empathisch, aber nicht schwammig. Fachlich klar,
-              menschlich warm. Das hat extrem geholfen.“
-            </p>
-            <div class="who">Familie <span>Betreuung gesamt</span></div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- FAQ -->
-    <span class="anchor" id="faq"></span>
-    <section>
-      <div class="container">
-        <div class="sectionHead">
-          <div>
-            <h2 class="reveal">FAQ — kurz beantwortet</h2>
-            <p class="sub reveal">Die meisten Sorgen sind normal. Die meisten Fragen sind lösbar.</p>
-          </div>
-        </div>
-
-        <div class="faq">
-          <details class="reveal">
-            <summary>
-              Wann sollte ich mich melden?
-              <span class="chev" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                  <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-            </summary>
-            <p>
-              So früh wie möglich, sobald du weißt, dass du schwanger bist. Dann können wir direkt prüfen, ob ein Betreuungsplatz frei ist
-              und du hast frühzeitig Orientierung.
-            </p>
-          </details>
-
-          <details class="reveal">
-            <summary>
-              Sind Vorsorgen bei der Hebamme möglich?
-              <span class="chev" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                  <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-            </summary>
-            <p>
-              Ja. Vorsorgeuntersuchungen können auch in der Praxis bei mir erfolgen. Der Unterschied: ich setze kein Ultraschallgerät ein.
-              Viele Familien wählen eine Kombination aus Frauenarzt (inkl. Ultraschall) und Hebammen-Vorsorge/Beratung.
-            </p>
-          </details>
-
-          <details class="reveal">
-            <summary>
-              Welche Themen deckt die Wochenbett-Betreuung ab?
-              <span class="chev" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                  <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-            </summary>
-            <p>
-              Nachsorge für Mutter & Kind (z. B. Rückbildung, Wundheilung, Entwicklung des Babys), Still- und Beikostberatung,
-              Pflege- und Alltagsfragen (Wickeln, Schlafumgebung, Ernährung, Routinen). Ziel: du fühlst dich sicher.
-            </p>
-          </details>
-
-          <details class="reveal">
-            <summary>
-              Was ist mit Akupunktur & K-Taping?
-              <span class="chev" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                  <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-            </summary>
-            <p>
-              Akupunktur kann u. a. bei Übelkeit, Kopfschmerzen/Migräne, Ödemen oder zur Entspannung unterstützen – auch geburtsvorbereitend.
-              K-Taping kann z. B. bei Rückenbeschwerden, Ödemen oder als Bauchstütze helfen. Ob das für dich passt, klären wir individuell.
-            </p>
-          </details>
-
-          <details class="reveal">
-            <summary>
-              Wie buche ich am schnellsten?
-              <span class="chev" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                  <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-            </summary>
-            <p>
-              Am schnellsten: kurz anrufen oder das Anfrage-Formular nutzen. Schreib bitte deinen ET, Wohnort und Wunsch (Betreuung/Kurs)
-              dazu — dann geht’s ohne Ping-Pong.
-            </p>
-          </details>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <span class="anchor" id="kontakt"></span>
-    <section>
-      <div class="container">
-        <div class="sectionHead">
-          <div>
-            <h2 class="reveal">Kontakt</h2>
-            <p class="sub reveal">Ein kurzer Kontakt. Ein klarer nächster Schritt.</p>
-          </div>
-        </div>
-
-        <div class="contactCard shadowGlow">
-          <div class="contactGrid">
-            <div class="contactLeft">
-              <h3 class="reveal" style="margin:0; font-size: 22px;">Rieke Löbker</h3>
-              <p class="reveal" style="margin:8px 0 0; color: var(--muted); line-height:1.7;">
-                Freiberufliche Hebamme in Rheine und Umgebung.
-                Schreib mir kurz deinen ET, deinen Wohnort und was du brauchst — dann melde ich mich.
-              </p>
-
-              <div class="kv reveal">
-                <div class="row">
-                  <div>
-                    <strong>Telefon</strong>
-                    <a href="tel:+4916096477650" data-cursor="link">0160 / 964 776 50</a>
-                  </div>
-                  <div style="text-align:right;">
-                    <strong>Antwortzeit</strong>
-                    <span>so schnell wie möglich</span>
-                  </div>
-                </div>
-                <div class="row">
-                  <div>
-                    <strong>E-Mail</strong>
-                    <a href="mailto:info@hebamme-rieke.de" data-cursor="link">info@hebamme-rieke.de</a>
-                  </div>
-                  <div style="text-align:right;">
-                    <strong>Website</strong>
-                    <span>hebamme-rieke.de</span>
-                  </div>
-                </div>
-                <div class="row">
-                  <div>
-                    <strong>Hebammenpraxis Bauchgeflüster</strong>
-                    <span>Humboldtplatz 22 · 48429 Rheine</span>
-                  </div>
-                  <div style="text-align:right;">
-                    <strong>Praxisraum</strong>
-                    <span>Surenburgstr. 229 · 48429 Rheine</span>
-                  </div>
-                </div>
-              </div>
-
-              <p class="hint reveal">
-                Tipp: Wenn du direkt schreibst, <strong>ET + Wohnort</strong> zu nennen, sparst du dir Rückfragen.
-              </p>
-
-              <div class="ctaRow reveal">
-                <a class="btn btnGhost" href="tel:+4916096477650" data-cursor="link">Jetzt anrufen</a>
-                <a class="btn btnGhost" href="mailto:info@hebamme-rieke.de?subject=Anfrage%20Hebammenbetreuung" data-cursor="link">Mail senden</a>
-              </div>
-            </div>
-
-            <div class="contactRight">
-              <h3 class="reveal" style="margin:0; font-size: 20px;">Anfrage-Formular</h3>
-              <p class="reveal" style="margin:8px 0 0; color: var(--muted); line-height:1.7;">
-                Dieses Formular erzeugt eine E-Mail (kein Server nötig). Du kannst es später leicht auf ein echtes Backend umstellen.
-              </p>
-
-              <form class="reveal" id="contactForm" autocomplete="on">
-                <div class="row2">
-                  <div class="field">
-                    <label for="name">Name</label>
-                    <input id="name" name="name" placeholder="Vorname Nachname" required />
-                  </div>
-                  <div class="field">
-                    <label for="email">E-Mail</label>
-                    <input id="email" name="email" type="email" placeholder="name@beispiel.de" required />
-                  </div>
-                </div>
-
-                <div class="row2">
-                  <div class="field">
-                    <label for="et">Errechneter Entbindungstermin (ET)</label>
-                    <input id="et" name="et" type="date" />
-                  </div>
-                  <div class="field">
-                    <label for="ort">Wohnort</label>
-                    <input id="ort" name="ort" placeholder="z. B. Rheine" />
-                  </div>
-                </div>
-
-                <div class="row2">
-                  <div class="field">
-                    <label for="anliegen">Anliegen</label>
-                    <select id="anliegen" name="anliegen">
-                      <option value="Schwangerschaftsbetreuung">Schwangerschaftsbetreuung</option>
-                      <option value="Wochenbettbetreuung">Wochenbettbetreuung</option>
-                      <option value="Geburtsvorbereitungskurs">Geburtsvorbereitungskurs</option>
-                      <option value="Rückbildungskurs">Rückbildungskurs</option>
-                      <option value="Babymassage">Babymassage</option>
-                      <option value="Allgemeine Frage">Allgemeine Frage</option>
-                    </select>
-                  </div>
-                  <div class="field">
-                    <label for="tel">Telefon (optional)</label>
-                    <input id="tel" name="tel" placeholder="für Rückruf" />
-                  </div>
-                </div>
-
-                <div class="field">
-                  <label for="msg">Nachricht</label>
-                  <textarea id="msg" name="msg" placeholder="Kurz: Was brauchst du gerade? Was verunsichert dich? Was ist dir wichtig?"></textarea>
-                </div>
-
-                <div class="row2">
-                  <button type="submit" class="btn btnPrimary" data-cursor="link">
-                    E-Mail vorbereiten
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                      <path d="M22 2 11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                      <path d="M22 2 15 22l-4-9-9-4 20-7z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  </button>
-                  <button type="button" class="btn btnGhost" id="copyBtn" data-cursor="link">Text kopieren</button>
-                </div>
-
-                <p class="hint">
-                  Mit Absenden öffnet sich dein Mail-Programm. Wenn du kein Mail-Programm nutzt (z. B. Webmail), nimm „Text kopieren“.
-                </p>
-              </form>
-
-              <div class="mutedBox reveal" style="margin-top:14px;">
-                <strong style="color:rgba(255,255,255,.92)">Datenschutz-Hinweis:</strong>
-                Deine Eingaben werden in diesem Demo-Setup nicht gespeichert. Eine echte Formular-Übermittlung (Server/CRM) kann nachgerüstet werden.
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer>
-      <div class="container">
-        <div class="footGrid">
-          <div>
-            <div style="display:flex; align-items:center; gap:12px;">
-              <img src="https://hebamme-rieke.de/wp-content/uploads/2018/07/Rieke-Petersen_Logo_violett_150x150.png" alt="Logo" style="width:46px;height:46px;border-radius:16px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.06);" />
-              <div>
-                <strong style="font-weight:1000;">Hebamme Rieke Löbker</strong><br/>
-                <span style="color:var(--muted); font-size:12px;">Deine achtsame Hebamme · Rheine & Umgebung</span>
-              </div>
-            </div>
-
-            <p class="footSmall">
-              © <span id="year"></span> Hebamme Rieke Löbker. Inhalte dienen der Information und ersetzen keine medizinische Diagnostik.
-              Bei akuten Beschwerden bitte ärztliche Hilfe in Anspruch nehmen.
-            </p>
-
-            <div class="legal">
-              <button class="linkBtn" id="openImpressum">Impressum</button>
-              <button class="linkBtn" id="openDatenschutz">Datenschutzerklärung</button>
-              <a class="linkBtn" href="tel:+4916096477650" style="text-decoration:none; display:inline-block;">Telefon</a>
-              <a class="linkBtn" href="#top" style="text-decoration:none; display:inline-block;">Nach oben</a>
-            </div>
-          </div>
-
-          <div>
-            <div class="card" style="box-shadow:none;">
-              <h3 style="margin:0 0 6px;">Standorte</h3>
-              <p style="margin:0; color:var(--muted); line-height:1.7;">
-                <strong style="color:rgba(255,255,255,.88)">Bauchgeflüster</strong><br/>
-                Humboldtplatz 22 · 48429 Rheine
-              </p>
-              <div class="divider" style="margin:12px 0;"></div>
-              <p style="margin:0; color:var(--muted); line-height:1.7;">
-                <strong style="color:rgba(255,255,255,.88)">Praxisraum</strong><br/>
-                Surenburgstr. 229 · 48429 Rheine
-              </p>
-              <div class="divider" style="margin:12px 0;"></div>
-              <p style="margin:0; color:var(--muted); line-height:1.7;">
-                <strong style="color:rgba(255,255,255,.88)">Kontakt</strong><br/>
-                0160 / 964 776 50 · info@hebamme-rieke.de
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
-  </div>
-
-  <!-- MODALS -->
-  <div class="modal" id="modalImpressum" role="dialog" aria-modal="true" aria-label="Impressum">
-    <div class="dialog" tabindex="-1">
-      <div class="dialogHead">
-        <strong>Impressum</strong>
-        <button class="closeBtn" data-close="impressum" aria-label="Schließen">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M18 6 6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-        </button>
-      </div>
-      <div class="dialogBody">
-        <h4>Angaben gemäß § 5 TMG</h4>
-        <p>
-          <strong>Rieke Löbker</strong><br/>
-          Surenburgstr. 229 · 48429 Rheine · Deutschland<br/>
-          Tel.: 0160 / 96477650 · E-Mail: info@hebamme-rieke.de · Website: www.hebamme-rieke.de
-        </p>
-        <h4>Berufsbezeichnung</h4>
-        <p>
-          Hebamme (verliehen in Paderborn, Deutschland 2015)
-        </p>
-        <h4>Berufsrechtliche Regelung</h4>
-        <p>
-          Gesetz über den Beruf der Hebamme und des Entbindungspflegers (HebG). Hinweis: Verlinkungen/Quellen können bei Bedarf ergänzt werden.
-        </p>
-        <h4>Zuständige Aufsichtsbehörde</h4>
-        <p>
-          Gesundheitsamt des Kreises Steinfurt · Tecklenburgerstr. 10 · 48565 Steinfurt
-        </p>
-        <h4>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h4>
-        <p>
-          Rieke Löbker · Surenburgstr. 229 · 48429 Rheine
-        </p>
-        <h4>Online-Streitbeilegung (OS)</h4>
-        <p>
-          Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit.
-          Ich bin nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
-        </p>
-        <h4>Haftung für Inhalte</h4>
-        <p>
-          Als Diensteanbieter bin ich gemäß § 7 Abs. 1 TMG für eigene Inhalte nach den allgemeinen Gesetzen verantwortlich.
-          Nach §§ 8 bis 10 TMG besteht jedoch keine Verpflichtung, übermittelte oder gespeicherte fremde Informationen zu überwachen.
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal" id="modalDatenschutz" role="dialog" aria-modal="true" aria-label="Datenschutzerklärung">
-    <div class="dialog" tabindex="-1">
-      <div class="dialogHead">
-        <strong>Datenschutzerklärung</strong>
-        <button class="closeBtn" data-close="datenschutz" aria-label="Schließen">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M18 6 6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-        </button>
-      </div>
-      <div class="dialogBody">
-        <p>
-          <strong>Platzhalter:</strong> Diese Datenschutzerklärung ist bewusst kompakt als Template angelegt.
-          Für eine produktive Website in Deutschland solltest du eine vollständige DSGVO-konforme Datenschutzerklärung integrieren
-          (Hosting, Logfiles, Kontaktformular, ggf. Maps, Analytics, Cookies, Schriftarten, eingebettete Inhalte).
-        </p>
-        <p>
-          Wenn du willst, tausche diesen Abschnitt gegen eine rechtssichere Version (z. B. via Datenschutz-Generator / Jurist)
-          und trage die verwendeten Tools korrekt ein.
-        </p>
-        <div class="divider"></div>
-        <h4>Kontaktformular (Demo-Setup)</h4>
-        <p>
-          In dieser Ein-Datei-Demo werden Formulardaten nicht serverseitig gespeichert.
-          Beim Klick auf „E-Mail vorbereiten“ wird lediglich dein Mail-Programm geöffnet.
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // ---------- Helpers ----------
-    const $ = (sel, root=document) => root.querySelector(sel);
-    const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
-
-    // ---------- Year ----------
-    $("#year").textContent = new Date().getFullYear();
-
-    // ---------- Mobile menu ----------
-    const menuBtn = $("#menuBtn");
-    const mobilePanel = $("#mobilePanel");
-    menuBtn?.addEventListener("click", () => {
-      mobilePanel.classList.toggle("open");
-      menuBtn.setAttribute("aria-label", mobilePanel.classList.contains("open") ? "Menü schließen" : "Menü öffnen");
-    });
-    $$("#mobilePanel a").forEach(a => a.addEventListener("click", () => mobilePanel.classList.remove("open")));
-
-    // ---------- Smooth scroll (Lenis) ----------
+import React, { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Phone, Mail, MapPin, Heart, Baby, Calendar, ArrowRight, Menu, X, Star } from 'lucide-react';
+import Lenis from 'lenis';
+
+// --- Statische Daten (Außerhalb der Komponenten für bessere Performance) ---
+const navItems = ['Willkommen', 'Über mich', 'Leistungen', 'Kurse'];
+
+const servicesData = [
+  { title: "Vor der Geburt", desc: "Beratung, Vorsorge, Hilfe bei Beschwerden, Akupunktur & Taping.", icon: <Heart className="w-6 h-6 text-white" />, color: "bg-rose-400", image: "https://images.unsplash.com/photo-1555252333-9f8e92e65df9?auto=format&fit=crop&q=80&w=800" },
+  { title: "Nach der Geburt", desc: "Wochenbettbetreuung, Stillberatung, Gewichtskontrolle & Rückbildung.", icon: <Baby className="w-6 h-6 text-white" />, color: "bg-indigo-400", image: "https://images.unsplash.com/photo-1628173426868-b78b87a41492?auto=format&fit=crop&q=80&w=800" },
+  { title: "Kurse", desc: "Geburtsvorbereitung, Rückbildung & Babymassage in der Praxis.", icon: <Calendar className="w-6 h-6 text-white" />, color: "bg-teal-400", image: "https://images.unsplash.com/photo-1596956037803-b097268d011f?auto=format&fit=crop&q=80&w=800" }
+];
+
+// --- Smooth Scroll Setup ---
+const SmoothScroll = ({ children }: { children: React.ReactNode }) => {
+  useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      smoothTouch: false
     });
-    function raf(time){
+
+    function raf(time: number) {
       lenis.raf(time);
       requestAnimationFrame(raf);
     }
     requestAnimationFrame(raf);
+    return () => lenis.destroy();
+  }, []);
 
-    // anchor click -> Lenis scroll
-    $$('a[href^="#"]').forEach(a => {
-      a.addEventListener("click", (e) => {
-        const id = a.getAttribute("href");
-        if(!id || id.length < 2) return;
-        const el = document.querySelector(id);
-        if(!el) return;
-        e.preventDefault();
-        lenis.scrollTo(el, { offset: -78 });
-      });
-    });
+  return <>{children}</>;
+};
 
-    // ---------- Aurora animation ----------
-    const blobs = $$(".blob");
-    let t0 = 0;
-    function animateBlobs(t){
-      const tt = t * 0.001;
-      blobs.forEach((b, i) => {
-        const a = tt * (0.35 + i*0.08);
-        const x = Math.sin(a + i) * (60 + i*18);
-        const y = Math.cos(a * 1.2 + i) * (55 + i*16);
-        const r = Math.sin(a * 0.7) * (6 + i*2);
-        b.style.transform = `translate3d(${x}px, ${y}px, 0) rotate(${r}deg)`;
-      });
-      requestAnimationFrame(animateBlobs);
-    }
-    requestAnimationFrame(animateBlobs);
+// --- Animations ---
+const fadeUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } }
+};
 
-    // ---------- Marquee ----------
-    const marquee = $("#marquee");
-    let mX = 0;
-    function tickMarquee(){
-      mX -= 0.55; // speed
-      marquee.style.transform = `translate3d(${mX}px,0,0)`;
-      // reset loop
-      if(Math.abs(mX) > marquee.scrollWidth / 2) mX = 0;
-      requestAnimationFrame(tickMarquee);
-    }
-    requestAnimationFrame(tickMarquee);
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.15, delayChildren: 0.1 } }
+};
 
-    // ---------- Custom cursor ----------
-    const cursor = $(".cursor");
-    const cursorDot = $(".cursorDot");
-    const canHover = window.matchMedia("(hover:hover)").matches;
-    if(canHover){
-      let cx = window.innerWidth/2, cy = window.innerHeight/2;
-      let tx = cx, ty = cy;
-      let dx = cx, dy = cy;
+// --- Components ---
 
-      const show = () => { cursor.style.opacity = 1; cursorDot.style.opacity = 1; };
-      const hide = () => { cursor.style.opacity = 0; cursorDot.style.opacity = 0; };
-      window.addEventListener("mousemove", (e) => {
-        tx = e.clientX; ty = e.clientY;
-        show();
-      });
-      window.addEventListener("mouseleave", hide);
+const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-      // magnet hover
-      const hoverables = $$("[data-cursor]");
-      hoverables.forEach(el => {
-        el.addEventListener("mouseenter", () => {
-          cursor.style.transform = "translate(-50%,-50%) scale(1.15)";
-        });
-        el.addEventListener("mouseleave", () => {
-          cursor.style.transform = "translate(-50%,-50%) scale(1)";
-        });
-      });
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-      function cursorRaf(){
-        cx += (tx - cx) * 0.14;
-        cy += (ty - cy) * 0.14;
-        dx += (tx - dx) * 0.32;
-        dy += (ty - dy) * 0.32;
-        cursor.style.left = cx + "px";
-        cursor.style.top = cy + "px";
-        cursorDot.style.left = dx + "px";
-        cursorDot.style.top = dy + "px";
-        requestAnimationFrame(cursorRaf);
-      }
-      requestAnimationFrame(cursorRaf);
-    }
+  return (
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/90 backdrop-blur-md shadow-sm py-3' : 'bg-transparent py-5'}`}>
+      <div className="container mx-auto px-6 flex justify-between items-center">
+        <a href="#willkommen" className="text-2xl font-serif font-bold text-primary tracking-tight">Hebamme Rieke</a>
+        
+        <div className="hidden md:flex space-x-8 items-center text-sm font-medium text-slate-600">
+          {navItems.map((item) => (
+            <a key={item} href={`#${item.toLowerCase().replace(' ', '-')}`} className="hover:text-primary transition-colors relative group">
+              {item}
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
+            </a>
+          ))}
+          <a href="#kontakt" className="px-6 py-2.5 bg-primary text-white rounded-full hover:bg-violet-700 transition-all shadow-lg hover:shadow-violet-200 transform hover:-translate-y-0.5">Kontakt</a>
+        </div>
 
-    // ---------- GSAP reveals ----------
-    gsap.registerPlugin(ScrollTrigger);
+        <button 
+          onClick={() => setIsOpen(!isOpen)} 
+          className="md:hidden text-slate-800 p-2 hover:bg-slate-100 rounded-full transition-colors"
+          aria-label="Menü öffnen/schließen"
+        >
+          {isOpen ? <X /> : <Menu />}
+        </button>
+      </div>
 
-    const reveals = $$(".reveal");
-    reveals.forEach((el) => {
-      gsap.to(el, {
-        opacity: 1,
-        y: 0,
-        duration: 0.9,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: el,
-          start: "top 84%",
-          toggleActions: "play none none reverse"
-        }
-      });
-    });
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden absolute top-full left-0 w-full bg-white border-b border-violet-100 overflow-hidden shadow-xl"
+          >
+            <div className="flex flex-col p-6 space-y-4">
+               {[...navItems, 'Kontakt'].map((item) => (
+                <a 
+                  key={item} 
+                  href={`#${item.toLowerCase().replace(' ', '-')}`} 
+                  onClick={() => setIsOpen(false)} 
+                  className="text-lg font-medium text-slate-700 py-2 border-b border-slate-50 last:border-0"
+                >
+                  {item}
+                </a>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </nav>
+  );
+};
 
-    // Subtle hero parallax
-    const heroImg = document.querySelector(".imgStack img");
-    if(heroImg){
-      gsap.to(heroImg, {
-        scale: 1.08,
-        y: 18,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".heroCard",
-          start: "top top",
-          end: "bottom top",
-          scrub: 0.8
-        }
-      });
-    }
+const Hero = () => {
+  return (
+    <section id="willkommen" className="relative min-h-screen flex items-center pt-20 overflow-hidden bg-[#FBFBFE]">
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-purple-100 rounded-full blur-[120px] opacity-40 translate-x-1/3 -translate-y-1/4" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-indigo-100 rounded-full blur-[100px] opacity-40 -translate-x-1/4 translate-y-1/4" />
+      
+      <div className="container mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-16 items-center">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer} className="space-y-10">
+          <motion.div variants={fadeUp} className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-white border border-violet-100 text-violet-700 text-sm font-medium shadow-sm">
+            <Heart size={14} className="fill-violet-200 text-violet-500" />
+            <span>Deine achtsame Hebamme in Rheine</span>
+          </motion.div>
+          
+          <motion.h1 variants={fadeUp} className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-slate-900 leading-[1.1] tracking-tight">
+            Du & <br /> Dein Baby. <br />
+            <span className="text-primary italic relative">
+              In besten Händen.
+              <svg className="absolute w-full h-3 -bottom-1 left-0 text-violet-200 -z-10" viewBox="0 0 100 10" preserveAspectRatio="none">
+                <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="8" fill="none" />
+              </svg>
+            </span>
+          </motion.h1>
+          
+          <motion.p variants={fadeUp} className="text-lg md:text-xl text-slate-600 max-w-lg leading-relaxed font-light">
+            Eine Schwangerschaft ist der Beginn eines Wunders. Ich begleite dich mit Herz, Fachwissen und viel Zeit durch diese besondere Lebensphase.
+          </motion.p>
+          
+          <motion.div variants={fadeUp} className="flex flex-wrap gap-4 pt-2">
+            <a href="#kontakt" className="group px-8 py-4 bg-primary text-white rounded-full font-medium hover:bg-violet-700 transition-all shadow-xl hover:shadow-violet-200 hover:shadow-2xl flex items-center space-x-3">
+              <span>Kostenloses Vorgespräch</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </a>
+            <a href="#leistungen" className="px-8 py-4 bg-white text-slate-700 border border-slate-200 rounded-full font-medium hover:bg-slate-50 transition-all hover:border-slate-300">
+              Leistungen ansehen
+            </a>
+          </motion.div>
+        </motion.div>
 
-    // ---------- Contact form: mailto builder ----------
-    const form = $("#contactForm");
-    const copyBtn = $("#copyBtn");
+        <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 1.2, ease: "easeOut" }} className="relative hidden lg:block">
+          <div className="relative z-10 aspect-[3/4] rounded-[2.5rem] overflow-hidden shadow-2xl bg-white border-8 border-white">
+             <div className="absolute inset-0 bg-slate-100 animate-pulse" />
+             <img src="https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&q=80&w=1200" alt="Mutter hält liebevoll ihr Baby" className="w-full h-full object-cover scale-105 hover:scale-100 transition-transform duration-[2s]" />
+             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+          </div>
+          
+          <motion.div initial={{ y: 40, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ delay: 0.6, duration: 0.8 }} className="absolute top-10 -right-10 bg-white/90 backdrop-blur-sm p-4 rounded-2xl shadow-xl z-20 border border-white/50 max-w-[200px]">
+             <div className="flex gap-1 text-yellow-400 mb-1">{[1,2,3,4,5].map(i => <Star key={i} size={14} fill="currentColor" />)}</div>
+             <p className="text-xs font-medium text-slate-700">"Die beste Entscheidung für uns!"</p>
+             <p className="text-[10px] text-slate-400 mt-1">- Nina aus Rheine</p>
+          </motion.div>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
 
-    function buildMail(){
-      const name = ($("#name").value || "").trim();
-      const email = ($("#email").value || "").trim();
-      const et = ($("#et").value || "").trim();
-      const ort = ($("#ort").value || "").trim();
-      const tel = ($("#tel").value || "").trim();
-      const anliegen = ($("#anliegen").value || "").trim();
-      const msg = ($("#msg").value || "").trim();
+const QuoteSection = () => {
+  return (
+    <section className="py-32 bg-primary text-white text-center relative overflow-hidden">
+       <div className="absolute inset-0 opacity-10" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")` }}></div>
+       <div className="container mx-auto px-6 relative z-10 max-w-4xl">
+         <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
+           <span className="text-6xl block mb-6 font-serif opacity-30">“</span>
+           <h2 className="text-3xl md:text-5xl lg:text-6xl font-serif italic mb-10 leading-tight">
+             Zwei Dinge sollen Kinder von ihren Eltern bekommen: <br/> 
+             <span className="font-bold relative inline-block mt-2">Wurzeln und Flügel.</span>
+           </h2>
+           <div className="w-16 h-1 bg-white/30 mx-auto mb-6" />
+           <p className="text-xl opacity-90 font-light tracking-widest uppercase">— Johann Wolfgang von Goethe</p>
+         </motion.div>
+       </div>
+    </section>
+  );
+};
 
-      const subject = `Anfrage: ${anliegen}${et ? " (ET: " + et + ")" : ""}`;
-      const body =
-`Hallo Rieke,
+const Services = () => {
+  return (
+    <section id="leistungen" className="py-32 bg-white">
+      <div className="container mx-auto px-6">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+          <div className="max-w-2xl">
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-slate-900 mb-6">Mein Angebot für dich</h2>
+            <p className="text-lg text-slate-600">Von den ersten Schwangerschaftswochen bis weit ins erste Lebensjahr hinein bin ich an deiner Seite.</p>
+          </div>
+          <a href="#kontakt" className="hidden md:inline-flex items-center text-primary font-bold hover:text-violet-800 transition-colors">
+            Alle Leistungen im Detail <ArrowRight className="ml-2" />
+          </a>
+        </div>
+        
+        <div className="grid md:grid-cols-3 gap-8">
+          {servicesData.map((service, index) => (
+            <motion.div 
+              key={index} 
+              initial={{ opacity: 0, y: 30 }} 
+              whileInView={{ opacity: 1, y: 0 }} 
+              transition={{ delay: index * 0.15 }} 
+              viewport={{ once: true }} 
+              className="group relative bg-white rounded-[2rem] overflow-hidden border border-slate-100 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500"
+            >
+              <div className="h-64 overflow-hidden relative">
+                 <div className="absolute inset-0 bg-slate-900/10 group-hover:bg-slate-900/0 transition-colors z-10" />
+                 <img src={service.image} alt={service.title} loading="lazy" className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-1000" />
+                 <div className={`absolute top-6 left-6 w-14 h-14 ${service.color} rounded-2xl flex items-center justify-center shadow-lg z-20`}>
+                   {service.icon}
+                 </div>
+              </div>
+              <div className="p-8">
+                <h3 className="text-2xl font-serif font-bold text-slate-900 mb-3">{service.title}</h3>
+                <p className="text-slate-600 mb-8 leading-relaxed line-clamp-2">{service.desc}</p>
+                <div className="flex items-center text-sm font-bold text-slate-900 group-hover:text-primary transition-colors cursor-pointer">
+                  Mehr erfahren <ArrowRight size={14} className="ml-2" />
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
 
-ich möchte mich gerne bei dir melden.
+const Contact = () => {
+  // Beugt dem Neuladen der Seite beim Absenden des Formulars vor
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Hier kannst du später deine Formular-Logik (z.B. Fetch-API zu deinem Backend) einbauen
+    console.log("Formular abgesendet!");
+  };
 
-Name: ${name}
-E-Mail: ${email}
-Telefon: ${tel || "-"}
-Wohnort: ${ort || "-"}
-ET: ${et || "-"}
+  return (
+    <section id="kontakt" className="py-32 bg-white">
+      <div className="container mx-auto px-6 max-w-6xl">
+        <div className="bg-slate-900 rounded-[3rem] p-8 md:p-16 overflow-hidden relative shadow-2xl">
+          <div className="relative z-10 grid lg:grid-cols-2 gap-16">
+            
+            <div className="space-y-8 text-white">
+              <div>
+                <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6">Lass uns sprechen.</h2>
+                <p className="text-lg text-slate-300 font-light">Ich bin für dich da. Melde dich gerne für ein unverbindliches Erstgespräch.</p>
+              </div>
+              <div className="space-y-8 pt-4">
+                <div className="flex items-start space-x-6 group">
+                  <Phone size={24} className="text-primary" />
+                  <div>
+                    <h4 className="text-xl font-bold mb-1">Telefon</h4>
+                    <p className="text-slate-300 text-lg">0160-96477650</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-6 group">
+                  <Mail size={24} className="text-primary" />
+                  <div>
+                    <h4 className="text-xl font-bold mb-1">E-Mail</h4>
+                    <a href="mailto:info@hebamme-rieke.de" className="text-slate-300 text-lg hover:text-white transition-colors">info@hebamme-rieke.de</a>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-6 group">
+                  <MapPin size={24} className="text-primary" />
+                  <div>
+                    <h4 className="text-xl font-bold mb-1">Praxis Standorte</h4>
+                    <p className="text-slate-300">Humboldtplatz 22, Rheine<br/>Surenburgstr. 229, Rheine</p>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-Anliegen: ${anliegen}
+            <div className="bg-white p-8 md:p-10 rounded-[2rem] shadow-xl">
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="grid md:grid-cols-2 gap-5">
+                  <input type="text" required className="w-full px-4 py-3 bg-slate-50 rounded-xl border border-slate-200 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all" placeholder="Vorname" />
+                  <input type="text" required className="w-full px-4 py-3 bg-slate-50 rounded-xl border border-slate-200 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all" placeholder="Nachname" />
+                </div>
+                <input type="email" required className="w-full px-4 py-3 bg-slate-50 rounded-xl border border-slate-200 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all" placeholder="E-Mail" />
+                <textarea rows={4} required className="w-full px-4 py-3 bg-slate-50 rounded-xl border border-slate-200 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all resize-none" placeholder="Deine Nachricht"></textarea>
+                <button type="submit" className="w-full py-4 bg-primary text-white font-bold rounded-xl hover:bg-violet-700 transition-all">Nachricht senden</button>
+              </form>
+            </div>
 
-Nachricht:
-${msg || "-"}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
 
-Liebe Grüße
-${name}`;
+const Footer = () => (
+  <footer className="bg-white text-slate-500 py-16 border-t border-slate-100">
+    <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+      <div className="text-center md:text-left">
+        <h3 className="text-2xl font-serif font-bold text-slate-900 mb-2">Hebamme Rieke</h3>
+        <p className="text-sm">&copy; {new Date().getFullYear()} Rieke Löbker. Alle Rechte vorbehalten.</p>
+      </div>
+      <div className="flex space-x-8 text-sm font-medium">
+        <a href="#impressum" className="hover:text-primary transition-colors">Impressum</a>
+        <a href="#datenschutz" className="hover:text-primary transition-colors">Datenschutz</a>
+      </div>
+    </div>
+  </footer>
+);
 
-      return { subject, body };
-    }
+function App() {
+  return (
+    <SmoothScroll>
+      <div className="bg-background min-h-screen text-slate-900 selection:bg-primary/20 selection:text-primary scroll-smooth">
+        <Navbar />
+        <main>
+          <Hero />
+          <Services />
+          <QuoteSection />
+          <Contact />
+        </main>
+        <Footer />
+      </div>
+    </SmoothScroll>
+  );
+}
 
-    form?.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const { subject, body } = buildMail();
-      const mailto = `mailto:info@hebamme-rieke.de?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      window.location.href = mailto;
-    });
-
-    copyBtn?.addEventListener("click", async () => {
-      const { subject, body } = buildMail();
-      const text = `Betreff: ${subject}\n\n${body}`;
-      try{
-        await navigator.clipboard.writeText(text);
-        copyBtn.textContent = "Kopiert ✓";
-        setTimeout(()=> copyBtn.textContent = "Text kopieren", 1400);
-      }catch(err){
-        alert("Kopieren nicht möglich. Bitte manuell markieren und kopieren.");
-      }
-    });
-
-    // ---------- Modals ----------
-    const modalImpressum = $("#modalImpressum");
-    const modalDatenschutz = $("#modalDatenschutz");
-    $("#openImpressum")?.addEventListener("click", () => openModal(modalImpressum));
-    $("#openDatenschutz")?.addEventListener("click", () => openModal(modalDatenschutz));
-
-    $$("[data-close]").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const t = btn.getAttribute("data-close");
-        if(t === "impressum") closeModal(modalImpressum);
-        if(t === "datenschutz") closeModal(modalDatenschutz);
-      });
-    });
-
-    function openModal(m){
-      m.classList.add("open");
-      document.body.style.overflow = "hidden";
-      const focusable = m.querySelector(".dialog");
-      focusable?.focus();
-    }
-    function closeModal(m){
-      m.classList.remove("open");
-      document.body.style.overflow = "";
-    }
-    [modalImpressum, modalDatenschutz].forEach(m => {
-      m.addEventListener("click", (e) => { if(e.target === m) closeModal(m); });
-    });
-    window.addEventListener("keydown", (e) => {
-      if(e.key === "Escape"){
-        closeModal(modalImpressum);
-        closeModal(modalDatenschutz);
-      }
-    });
-  </script>
-</body>
-</html>
+export default App;
